@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=3 uid="uid://bi1yay2wialgs"]
+
+[ext_resource type="Script" path="res://scritps/world.gd" id="1_rv3lu"]
+[ext_resource type="PackedScene" uid="uid://bckp3sl38cwh" path="res://scenes/faro.tscn" id="1_u107u"]
+[ext_resource type="Texture2D" uid="uid://cf6b8jn4bj34k" path="res://assets/art/mar.jpg" id="2_dvwer"]
+[ext_resource type="Shader" path="res://scritps/agua.gdshader" id="2_t4o14"]
+[ext_resource type="Script" path="res://scenes/CanvasModulate.gd" id="3_m6t7i"]
+[ext_resource type="Texture2D" uid="uid://cxebiqog1vgmk" path="res://assets/art/daynightcycle-gradient-texture.tres" id="4_isjnb"]
+[ext_resource type="Script" path="res://scenes/Label.gd" id="5_ab4yk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jnxoe"]
+shader = ExtResource("2_t4o14")
+shader_parameter/base_color = Color(0.833, 0.954, 1, 1)
+shader_parameter/main_color = Color(0, 0.786, 0.97, 1)
+shader_parameter/scale_water = 1.0
+shader_parameter/scale_water_extra = 1.0
+shader_parameter/rippling = 0.1
+shader_parameter/foam_scale = 1.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_bg5tr"]
+vertices = PackedVector2Array(659, 408, 1270, 710, 10, 710, 617, 408, 10, 10, 617, 321, 1270, 10, 659, 321)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(5, 4, 6, 7), PackedInt32Array(7, 6, 1, 0)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_rv3lu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_jnxoe")
+position = Vector2(640, 296)
+scale = Vector2(3.09265, 2.63158)
+texture = ExtResource("2_dvwer")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_bg5tr")
+
+[node name="Faros" type="Node2D" parent="NavigationRegion2D"]
+
+[node name="faro" parent="NavigationRegion2D/Faros" instance=ExtResource("1_u107u")]
+position = Vector2(640, 360)
+
+[node name="faro2" parent="NavigationRegion2D/Faros" instance=ExtResource("1_u107u")]
+position = Vector2(848, 480)
+attraction_force = 200
+
+[node name="faro3" parent="NavigationRegion2D/Faros" instance=ExtResource("1_u107u")]
+position = Vector2(760, 136)
+
+[node name="faro4" parent="NavigationRegion2D/Faros" instance=ExtResource("1_u107u")]
+position = Vector2(376, 528)
+
+[node name="faro5" parent="NavigationRegion2D/Faros" instance=ExtResource("1_u107u")]
+position = Vector2(248, 216)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+script = ExtResource("3_m6t7i")
+gradient_texture = ExtResource("4_isjnb")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 648.0
+offset_top = 544.0
+offset_right = 706.0
+offset_bottom = 575.0
+text = "JUGAR"
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 52.0
+offset_bottom = 23.0
+text = " "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_ab4yk")
+
+[connection signal="time_tick" from="CanvasModulate" to="CanvasLayer/Control/Label" method="_on_canvas_modulate_time_tick"]
+[connection signal="pressed" from="CanvasLayer/Button" to="CanvasModulate" method="_on_button_pressed"]

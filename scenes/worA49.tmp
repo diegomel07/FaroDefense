@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi1yay2wialgs"]
+
+[ext_resource type="PackedScene" uid="uid://bckp3sl38cwh" path="res://scenes/faro.tscn" id="1_u107u"]
+[ext_resource type="PackedScene" uid="uid://de4cwf4weyk2w" path="res://scenes/enemigo.tscn" id="2_8syf7"]
+
+[node name="World" type="Node2D"]
+
+[node name="faro" parent="." instance=ExtResource("1_u107u")]
+position = Vector2(557, 293)
+
+[node name="enemigo" parent="." instance=ExtResource("2_8syf7")]
+position = Vector2(135, 103)
+
+[node name="enemigo2" parent="." instance=ExtResource("2_8syf7")]
+position = Vector2(135, 103)
+
+[connection signal="enemy_enters" from="faro" to="enemigo" method="_on_faro_enemy_enters"]

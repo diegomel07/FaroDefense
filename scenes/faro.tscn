@@ -1,0 +1,133 @@
+[gd_scene load_steps=18 format=3 uid="uid://bckp3sl38cwh"]
+
+[ext_resource type="Texture2D" uid="uid://uiyyfuije55j" path="res://assets/art/light.png" id="1_0bs3t"]
+[ext_resource type="Script" path="res://scritps/faro.gd" id="1_88e4t"]
+[ext_resource type="Texture2D" uid="uid://4o6dbrgbsl42" path="res://assets/art/faro.png" id="1_frsqq"]
+[ext_resource type="Texture2D" uid="uid://culm0udby7q4o" path="res://assets/art/atraccion.png" id="4_mjqcs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x4age"]
+radius = 73.1095
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bliqp"]
+radius = 51.2445
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rn5cn"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(0, 0, 57, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kscc"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(57, 0, 57, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfrm4"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(114, 0, 57, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_crq7v"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(171, 0, 57, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7f6v"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(228, 0, 57, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5t48"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(285, 0, 57, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2v81"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(342, 0, 57, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eubys"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(399, 0, 57, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvfqq"]
+atlas = ExtResource("1_frsqq")
+region = Rect2(0, 86, 57, 86)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lwh15"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rn5cn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kscc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfrm4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crq7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7f6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5t48")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2v81")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eubys")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvfqq")
+}],
+"loop": true,
+"name": &"light_on",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtrbc"]
+size = Vector2(22, 67)
+
+[node name="faro" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_88e4t")
+
+[node name="Light" type="Area2D" parent="."]
+visible = false
+input_pickable = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Light"]
+modulate = Color(1, 1, 1, 0.341176)
+position = Vector2(-0.374999, 0.374997)
+scale = Vector2(0.234583, 0.234583)
+texture = ExtResource("1_0bs3t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Light"]
+shape = SubResource("CircleShape2D_x4age")
+
+[node name="LightTimer" type="Timer" parent="."]
+
+[node name="AttractionArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttractionArea"]
+shape = SubResource("CircleShape2D_bliqp")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="AttractionArea"]
+self_modulate = Color(1, 1, 1, 0.286275)
+position = Vector2(7.62939e-06, -2)
+texture = ExtResource("4_mjqcs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_lwh15")
+animation = &"light_on"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 4.5)
+shape = SubResource("RectangleShape2D_gtrbc")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="body_entered" from="Light" to="." method="_on_light_body_entered"]
+[connection signal="body_exited" from="Light" to="." method="_on_light_body_exited"]
+[connection signal="timeout" from="LightTimer" to="." method="_on_light_timer_timeout"]
+[connection signal="body_entered" from="AttractionArea" to="." method="_on_attraction_area_body_entered"]
+[connection signal="body_exited" from="AttractionArea" to="." method="_on_attraction_area_body_exited"]
