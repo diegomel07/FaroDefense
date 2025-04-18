@@ -111,3 +111,5 @@ func faro_taking_damage(cantidad):
 		queue_free()
 	return health
 
+func _on_enemigo_muerto():
+	print('muerto')

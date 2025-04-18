@@ -32,13 +32,18 @@ var past_minute:int= -1
 
 func _ready() -> void:
 	time = INGAME_TO_REAL_MINUTE_DURATION * MINUTES_PER_HOUR * INITIAL_HOUR
+	var value = (sin(time - PI / 2.0) + 1.0) / 2.0
+	self.color = gradient_texture.gradient.sample(value)
 
 
 func _process(delta: float) -> void:
-	time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
-	var value = (sin(time - PI / 2.0) + 1.0) / 2.0
-	self.color = gradient_texture.gradient.sample(value)
+	
+	print(estado)
+	
 	if estado != EstadoJuego.PAUSADO:
+		time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
+		var value = (sin(time - PI / 2.0) + 1.0) / 2.0
+		self.color = gradient_texture.gradient.sample(value)
 		_recalculate_time()
 
 

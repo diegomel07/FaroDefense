@@ -11,6 +11,8 @@ var damage_interval = 2.0
 @onready var detector = $RayCast2D
 @onready var agent = $NavigationAgent2D
 
+signal muerto
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -53,6 +55,7 @@ func aplly_damage(faro):
 func take_damage(cantidad):
 	health -= cantidad
 	if health <= 0:
+		muerto.emit()
 		queue_free()
 
 func _on_enters_zone(enemy, body, faro_position, attraction_force):

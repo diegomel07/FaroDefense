@@ -19,8 +19,8 @@ shader_parameter/rippling = 0.1
 shader_parameter/foam_scale = 1.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_bg5tr"]
-vertices = PackedVector2Array(659, 408, 1270, 710, 10, 710, 617, 408, 617, 321, 10, 10, 457, 200, 1270, 10, 659, 321, 499, 200, 499, 113, 457, 113)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5, 6), PackedInt32Array(7, 1, 0, 8), PackedInt32Array(9, 10, 7, 8, 4), PackedInt32Array(5, 7, 10, 11), PackedInt32Array(5, 11, 6), PackedInt32Array(9, 4, 6)])
+vertices = PackedVector2Array(659, 408, 1270, 710, 10, 710, 617, 408, 10, 10, 617, 321, 1270, 10, 659, 321)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(5, 4, 6, 7), PackedInt32Array(7, 6, 1, 0)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 
@@ -28,7 +28,6 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 script = ExtResource("1_rv3lu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_jnxoe")
 position = Vector2(640, 296)
 scale = Vector2(3.09265, 2.63158)
@@ -41,9 +40,6 @@ navigation_polygon = SubResource("NavigationPolygon_bg5tr")
 
 [node name="faro" parent="NavigationRegion2D/Faros" instance=ExtResource("1_u107u")]
 position = Vector2(640, 360)
-
-[node name="faro2" parent="NavigationRegion2D/Faros" instance=ExtResource("1_u107u")]
-position = Vector2(480, 152)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 script = ExtResource("3_m6t7i")

@@ -1,31 +1,106 @@
 extends Node2D
 
-var cant_enemies = 10
 var map_width = 1280
 var map_height = 720
 var enemy_preload = preload("res://scenes/enemigo.tscn")
+var map_rect = Rect2(Vector2.ZERO, Vector2(map_width, map_height))
+var total_abisal_eliminated = 0
+
+
 @onready var faros = $NavigationRegion2D/Faros.get_children()
+@onready var enemies_abisal = $EnemiesAbisal
+
+# Stats Jugador
+var puntos = 0
 
 func _ready():
-	generate_enemies()
+	pass
 
 
-func generate_enemies():
+func _process(delta):
+	$CanvasLayer/Control2/puntos.text = 'Puntos: ' + str(puntos) 
+
+func get_spawn_position_outside_map() -> Vector2:
+	var margin := 50  # Qué tan lejos fuera del mapa spawnean
+	
+	match randi() % 4:
+		0: # Arriba
+			return Vector2(
+				randf_range(map_rect.position.x - margin, map_rect.end.x + margin),
+				map_rect.position.y - margin
+			)
+		1: # Abajo
+			return Vector2(
+				randf_range(map_rect.position.x - margin, map_rect.end.x + margin),
+				map_rect.end.y + margin
+			)
+		2: # Izquierda
+			return Vector2(
+				map_rect.position.x - margin,
+				randf_range(map_rect.position.y - margin, map_rect.end.y + margin)
+			)
+		3: # Derecha
+			return Vector2(
+				map_rect.end.x + margin,
+				randf_range(map_rect.position.y - margin, map_rect.end.y + margin)
+			)
+		_: 
+			return Vector2.ZERO
+
+
+func generate_enemies(cant_enemies):
 	for i in range(cant_enemies):
 		var enemy = enemy_preload.instantiate()
 		# Posición aleatoria dentro del mapa
-		var x = randi_range(0, map_width)
-		var y = randi_range(0, map_height)
-		enemy.position = Vector2(x, y)
-
-		add_child(enemy)
+		enemy.position = get_spawn_position_outside_map()
+		
 		# Conectar este personaje con todas las zonas activas
 		connect_enemies_with_attraction(enemy)
+		enemy.connect('muerto', Callable(self, "_on_enemigo_muerto"))
+		
+		enemies_abisal.add_child(enemy)
 
 func connect_enemies_with_attraction(enemy):
 	# Asumiendo que las zonas están bajo un nodo llamado "Zonas"
 	for faro in faros:
-		if faro.has_signal("enemy_enters"):
+		if is_instance_valid(faro) and faro.has_signal("enemy_enters"):
 			faro.connect("enemy_enters", Callable(enemy, "_on_enters_zone"))
 
+# CADA NUEVO DIA 6 AM
+func _on_canvas_modulate_dia_nuevo():
+	pass
 
+
+func _on_canvas_modulate_time_tick(day, hour, minute):
+	
+	if hour == 6:
+		eliminar_enemigos()
+	
+	# apenas sean las 12 am - 0
+	
+	#Distinguir entre dias para hacer nuevas ronda
+	if hour >= 0 and hour <= 5:
+		#tutorial
+		if day == 1:
+			if minute % 20 == 0:
+				generate_enemies(3)
+		
+		if day == 2:
+			if minute % 20 == 0:
+				generate_enemies(3)
+				
+		if day == 3:
+			if minute % 20 == 0:
+				generate_enemies(3)
+				
+		if day == 4:
+			if minute % 20 == 0:
+				generate_enemies(3)
+			
+
+func eliminar_enemigos():
+	for child in $EnemiesAbisal.get_children():
+		child.queue_free()
+
+func _on_enemigo_muerto():
+	puntos += 100
