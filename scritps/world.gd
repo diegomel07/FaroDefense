@@ -19,6 +19,8 @@ func _ready():
 
 func _process(delta):
 	$CanvasLayer/Control2/puntos.text = 'Puntos: ' + str(puntos) 
+	
+
 
 func get_spawn_position_outside_map() -> Vector2:
 	var margin := 50  # Qué tan lejos fuera del mapa spawnean
@@ -72,7 +74,6 @@ func _on_canvas_modulate_dia_nuevo():
 
 
 func _on_canvas_modulate_time_tick(day, hour, minute):
-	
 	if hour == 6:
 		eliminar_enemigos()
 	
@@ -104,3 +105,11 @@ func eliminar_enemigos():
 
 func _on_enemigo_muerto():
 	puntos += 100
+
+
+func _on_inventory_closed():
+	get_tree().paused = false
+
+
+func _on_inventory_opened():
+	get_tree().paused = true

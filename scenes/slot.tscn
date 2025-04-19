@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvdgqxmph0n7p"]
+
+[ext_resource type="Script" path="res://scritps/slot.gd" id="1_0ow7b"]
+[ext_resource type="Texture2D" uid="uid://c57scw4w0chis" path="res://assets/art/invertorySlot.png" id="1_kg7td"]
+[ext_resource type="FontFile" uid="uid://b0yr12purk3qv" path="res://assets/fonts/NotJamChunkySans.ttf" id="3_c6i3k"]
+
+[node name="slot" type="Button"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(32, 32)
+offset_right = 48.0
+offset_bottom = 48.0
+script = ExtResource("1_0ow7b")
+
+[node name="background" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_kg7td")
+centered = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="item" type="Sprite2D" parent="CenterContainer/Panel"]
+
+[node name="Label" type="Label" parent="CenterContainer/Panel"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = 9.0
+offset_right = 23.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_c6i3k")
+theme_override_font_sizes/font_size = 13
+text = "
+"
+horizontal_alignment = 2

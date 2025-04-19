@@ -37,14 +37,19 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	
+		
 	print(estado)
 	
 	if estado != EstadoJuego.PAUSADO:
+		$"../CanvasLayer/Button".visible = false
+		$"../CanvasLayer/Button2".visible = false
 		time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
 		var value = (sin(time - PI / 2.0) + 1.0) / 2.0
 		self.color = gradient_texture.gradient.sample(value)
 		_recalculate_time()
+	else:
+		$"../CanvasLayer/Button".visible = true
+		$"../CanvasLayer/Button2".visible = true
 
 
 func _recalculate_time() -> void:
@@ -61,12 +66,12 @@ func _recalculate_time() -> void:
 		time_tick.emit(day, hour, minute)
 
 	# Si está en fase de juego (0h a 6h) y llega a 6 AM
-	if estado == EstadoJuego.JUGANDO and hour == 6 and minute == 0:
+	if estado == EstadoJuego.JUGANDO and hour == 6:
 		estado = EstadoJuego.PAUSADO
 		dia_nuevo.emit()
 
 	# Si está en avance rápido y vuelve a las 0 AM
-	if estado == EstadoJuego.AVANCE_RAPIDO and hour == 0 and minute == 0:
+	if estado == EstadoJuego.AVANCE_RAPIDO and hour == 0:
 		estado = EstadoJuego.JUGANDO
 		INGAME_SPEED = 30
 

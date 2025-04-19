@@ -1,0 +1,189 @@
+[gd_scene load_steps=9 format=3 uid="uid://ygarkdl44isq"]
+
+[ext_resource type="Script" path="res://scritps/inventory.gd" id="1_475kn"]
+[ext_resource type="Texture2D" uid="uid://humi406apacn" path="res://assets/art/inventory.png" id="1_m6w3m"]
+[ext_resource type="PackedScene" uid="uid://dvdgqxmph0n7p" path="res://scenes/slot.tscn" id="2_lw2y8"]
+[ext_resource type="FontFile" uid="uid://b0yr12purk3qv" path="res://assets/fonts/NotJamChunkySans.ttf" id="4_wbuti"]
+[ext_resource type="Texture2D" uid="uid://dh068o6yiwg3b" path="res://assets/art/button.png" id="5_g83mt"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m1ha5"]
+texture = ExtResource("5_g83mt")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(0, 0, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a0pi3"]
+texture = ExtResource("5_g83mt")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(32, 0, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jdbjw"]
+texture = ExtResource("5_g83mt")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(64, 0, 32, 32)
+
+[node name="inventory" type="Control"]
+custom_minimum_size = Vector2(237, 189)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 349.0
+offset_bottom = 279.0
+script = ExtResource("1_475kn")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_right = 349.0
+offset_bottom = 278.0
+texture = ExtResource("1_m6w3m")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="Inventory" type="GridContainer" parent="NinePatchRect"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = 0.5
+anchor_right = 0.27
+anchor_bottom = 0.5
+offset_left = -57.23
+offset_top = -90.0
+offset_right = 52.77
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 14
+columns = 2
+
+[node name="slot" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot2" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="slot3" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="slot4" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot5" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot6" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="Craft" type="GridContainer" parent="NinePatchRect"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = 0.5
+anchor_right = 0.27
+anchor_bottom = 0.5
+offset_left = 105.77
+offset_top = -1.00002
+offset_right = 206.77
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.85, 0.85)
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="fence" parent="NinePatchRect/Craft" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="Label" parent="NinePatchRect/Craft/fence/CenterContainer/Panel" index="1"]
+visible = false
+
+[node name="hamster" parent="NinePatchRect/Craft" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="Label" parent="NinePatchRect/Craft/hamster/CenterContainer/Panel" index="1"]
+visible = false
+
+[node name="slot3" parent="NinePatchRect/Craft" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="Label" parent="NinePatchRect/Craft/slot3/CenterContainer/Panel" index="1"]
+visible = false
+
+[node name="slot4" parent="NinePatchRect/Craft" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="Label" parent="NinePatchRect/Craft/slot4/CenterContainer/Panel" index="1"]
+visible = false
+
+[node name="Materials" type="GridContainer" parent="NinePatchRect"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = 0.5
+anchor_right = 0.27
+anchor_bottom = 0.5
+offset_left = 198.77
+offset_top = -120.0
+offset_right = 246.77
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+
+[node name="slot" parent="NinePatchRect/Materials" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot2" parent="NinePatchRect/Materials" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot3" parent="NinePatchRect/Materials" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="craftinSlot" parent="NinePatchRect" instance=ExtResource("2_lw2y8")]
+layout_mode = 0
+offset_left = 188.0
+offset_top = 28.0
+offset_right = 236.0
+offset_bottom = 76.0
+scale = Vector2(2, 2)
+
+[node name="crafting_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 232.0
+offset_right = 277.0
+offset_bottom = 260.0
+theme_override_fonts/font = ExtResource("4_wbuti")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_m1ha5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_a0pi3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jdbjw")
+text = "craft
+"
+
+[connection signal="pressed" from="crafting_button" to="." method="_on_crafting_button_pressed"]
+
+[editable path="NinePatchRect/Craft/fence"]
+[editable path="NinePatchRect/Craft/hamster"]
+[editable path="NinePatchRect/Craft/slot3"]
+[editable path="NinePatchRect/Craft/slot4"]
