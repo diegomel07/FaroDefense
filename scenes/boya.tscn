@@ -1,0 +1,114 @@
+[gd_scene load_steps=15 format=3 uid="uid://bxkmp1emhaf6a"]
+
+[ext_resource type="Script" path="res://scritps/boya.gd" id="1_khtk8"]
+[ext_resource type="Texture2D" uid="uid://culm0udby7q4o" path="res://assets/art/atraccion.png" id="3_tlub8"]
+[ext_resource type="Texture2D" uid="uid://blpwqonoklaby" path="res://assets/art/lighttexture.tres" id="4_dyv53"]
+[ext_resource type="Texture2D" uid="uid://bp8gvdq675hsl" path="res://assets/art/boya.png" id="4_hcgrl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x4age"]
+radius = 96.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bliqp"]
+radius = 51.2445
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtrbc"]
+size = Vector2(29, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_no3kv"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(0, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1yo5"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(45, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losko"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(90, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fk132"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(135, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sn14r"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(180, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wugmn"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(225, 0, 45, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f2wuq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_no3kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1yo5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_losko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fk132")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sn14r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wugmn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="boya" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_khtk8")
+attraction_force = 150
+
+[node name="Light" type="Area2D" parent="."]
+visible = false
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Light"]
+shape = SubResource("CircleShape2D_x4age")
+
+[node name="LightTimer" type="Timer" parent="."]
+
+[node name="AttractionArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttractionArea"]
+shape = SubResource("CircleShape2D_bliqp")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="AttractionArea"]
+self_modulate = Color(1, 1, 1, 0.286275)
+position = Vector2(7.62939e-06, -2)
+texture = ExtResource("3_tlub8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 0)
+shape = SubResource("RectangleShape2D_gtrbc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f2wuq")
+autoplay = "default"
+frame = 4
+frame_progress = 0.730253
+
+[node name="Light2" type="PointLight2D" parent="."]
+enabled = false
+color = Color(0.945098, 0.74902, 0.298039, 1)
+texture = ExtResource("4_dyv53")
+texture_scale = 3.0
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="body_entered" from="Light" to="." method="_on_light_body_entered"]
+[connection signal="body_exited" from="Light" to="." method="_on_light_body_exited"]
+[connection signal="timeout" from="LightTimer" to="." method="_on_light_timer_timeout"]
+[connection signal="body_entered" from="AttractionArea" to="." method="_on_attraction_area_body_entered"]
+[connection signal="body_exited" from="AttractionArea" to="." method="_on_attraction_area_body_exited"]

@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://ygarkdl44isq"]
+[gd_scene load_steps=10 format=3 uid="uid://ygarkdl44isq"]
 
 [ext_resource type="Script" path="res://scritps/inventory.gd" id="1_475kn"]
 [ext_resource type="Texture2D" uid="uid://humi406apacn" path="res://assets/art/inventory.png" id="1_m6w3m"]
 [ext_resource type="PackedScene" uid="uid://dvdgqxmph0n7p" path="res://scenes/slot.tscn" id="2_lw2y8"]
 [ext_resource type="Texture2D" uid="uid://dp85d8q4i01hs" path="res://assets/art/boya_1.png" id="4_ve43i"]
 [ext_resource type="FontFile" uid="uid://b0yr12purk3qv" path="res://assets/fonts/NotJamChunkySans.ttf" id="4_wbuti"]
-[ext_resource type="Texture2D" uid="uid://c88s3au034cui" path="res://assets/art/barrera48.png" id="5_bawwt"]
 [ext_resource type="Texture2D" uid="uid://dh068o6yiwg3b" path="res://assets/art/button.png" id="5_g83mt"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m1ha5"]
@@ -78,19 +77,9 @@ layout_mode = 2
 [node name="item" parent="NinePatchRect/Inventory/slot/CenterContainer/Panel" index="0"]
 texture = ExtResource("4_ve43i")
 
-[node name="Label" parent="NinePatchRect/Inventory/slot/CenterContainer/Panel" index="1"]
-text = "2000
-"
-
 [node name="slot2" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-
-[node name="item" parent="NinePatchRect/Inventory/slot2/CenterContainer/Panel" index="0"]
-texture = ExtResource("5_bawwt")
-
-[node name="Label" parent="NinePatchRect/Inventory/slot2/CenterContainer/Panel" index="1"]
-text = "500"
 
 [node name="slot3" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
 custom_minimum_size = Vector2(48, 48)
@@ -110,14 +99,7 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_jdbjw")
 text = "craft
 "
 
-[node name="FloatingItem" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [connection signal="pressed" from="NinePatchRect/Inventory/slot" to="." method="_on_slot_pressed"]
-[connection signal="pressed" from="NinePatchRect/Inventory/slot2" to="." method="_on_slot_2_pressed"]
 [connection signal="pressed" from="crafting_button" to="." method="_on_crafting_button_pressed"]
 
 [editable path="NinePatchRect/Inventory/slot"]
-[editable path="NinePatchRect/Inventory/slot2"]

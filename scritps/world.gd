@@ -3,15 +3,15 @@ extends Node2D
 var map_width = 1280
 var map_height = 720
 var enemy_preload = preload("res://scenes/enemigo.tscn")
+var eel = preload("res://scenes/eel.tscn")
 var map_rect = Rect2(Vector2.ZERO, Vector2(map_width, map_height))
-var total_abisal_eliminated = 0
 
 
 @onready var faros = $NavigationRegion2D/Faros.get_children()
 @onready var enemies_abisal = $EnemiesAbisal
 
 # Stats Jugador
-var puntos = 0
+var puntos = 2000
 
 func _ready():
 	pass
@@ -19,7 +19,6 @@ func _ready():
 
 func _process(delta):
 	$CanvasLayer/Control2/puntos.text = 'Puntos: ' + str(puntos) 
-	
 
 
 func get_spawn_position_outside_map() -> Vector2:
@@ -52,15 +51,22 @@ func get_spawn_position_outside_map() -> Vector2:
 
 func generate_enemies(cant_enemies):
 	for i in range(cant_enemies):
-		var enemy = enemy_preload.instantiate()
-		# Posición aleatoria dentro del mapa
+		var enemy_scene: PackedScene
+		var roll = randf()
+
+		if roll < 0.0:
+			enemy_scene = enemy_preload  # 70% de probabilidad
+		else:
+			enemy_scene = eel  # 30% de probabilidad
+
+		var enemy = enemy_scene.instantiate()
 		enemy.position = get_spawn_position_outside_map()
-		
-		# Conectar este personaje con todas las zonas activas
+
 		connect_enemies_with_attraction(enemy)
 		enemy.connect('muerto', Callable(self, "_on_enemigo_muerto"))
-		
+
 		enemies_abisal.add_child(enemy)
+
 
 func connect_enemies_with_attraction(enemy):
 	# Asumiendo que las zonas están bajo un nodo llamado "Zonas"
@@ -112,4 +118,14 @@ func _on_inventory_closed():
 
 
 func _on_inventory_opened():
+	$CanvasLayer/inventory.puntos_jugador = puntos
 	get_tree().paused = true
+
+
+func _on_button_pressed():
+	$NavigationRegion2D.bake_navigation_polygon()
+	faros = $NavigationRegion2D/Faros.get_children()
+
+
+func _on_inventory_buy(precio):
+	puntos = puntos - precio

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://de4cwf4weyk2w"]
+[gd_scene load_steps=10 format=3 uid="uid://de4cwf4weyk2w"]
 
 [ext_resource type="Script" path="res://scritps/enemigo.gd" id="1_5rv1d"]
 [ext_resource type="Texture2D" uid="uid://s8lycgsksiyc" path="res://assets/art/abisal.png" id="2_kpeh2"]
+[ext_resource type="Texture2D" uid="uid://blpwqonoklaby" path="res://assets/art/lighttexture.tres" id="3_85pqw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1w4mj"]
 size = Vector2(29, 17)
@@ -53,8 +54,15 @@ shape = SubResource("RectangleShape2D_1w4mj")
 target_position = Vector2(32, 0)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nptj4")
 animation = &"movement"
 autoplay = "movement"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(2, -20)
+color = Color(0.945098, 0.74902, 0.298039, 1)
+texture = ExtResource("3_85pqw")
+texture_scale = 0.5

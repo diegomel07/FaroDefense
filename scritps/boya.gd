@@ -3,12 +3,13 @@ extends StaticBody2D
 var health = 100
 var damage = 40
 var damage_radius = 5
-var attraction_radius = 100
+var attraction_radius = 300
 @export var attraction_force = 100
 var cant_energy = 100
 var light_cost = 10
 var enemies_inside = {}
 var damage_interval = 1.0  # cada 1 segundo
+
 
 
 @onready var light_timer := $LightTimer  # Timer en la escena
@@ -25,7 +26,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var damage_time = 0.0
 func _process(delta):
-	if $Light2.enabled:
+	if $Light.visible:
 		damage_time += delta
 		if damage_time >= damage_interval:
 			aplly_damage()
@@ -48,16 +49,18 @@ func adjust_attraction_area_size(size):
 func _on_input_event(viewport, event, shape_idx):
 	if event.is_pressed():
 		$Light2.enabled = !$Light2.enabled  # Alternar luz
-		$Light/CollisionShape2D.disabled = !$Light2.enabled
-		if $Light2.enabled:
-			$AnimatedSprite2D.play('light_on')
+		$Light/CollisionShape2D.disabled = !$Light.visible
+		if $Light.visible:
+			pass
+			#$AnimatedSprite2D.play('light_on')
 		else:
-			$AnimatedSprite2D.stop()
+			pass
+			#$AnimatedSprite2D.stop()
 		
 		$AttractionArea.visible = !$AttractionArea.visible  # Alternar luz
 		$AttractionArea/CollisionShape2D.disabled = !$AttractionArea.visible  # Alternar luz
 		
-		if $Light2.enabled:
+		if $Light.visible:
 			light_timer.wait_time = 2.0
 			light_timer.start()
 		else:
@@ -75,7 +78,7 @@ func _on_light_body_exited(body):
 
 # se recarga o carga la energia
 func _on_light_timer_timeout():
-	if $Light2.enabled:
+	if $Light.visible:
 		cant_energy -= light_cost
 		#print("Energía:", cant_energy)
 		if cant_energy <= 0:
@@ -95,6 +98,8 @@ func _on_light_timer_timeout():
 			light_timer.stop()
 			#print("Energía recargada por completo.")
 
+
+
 func _on_attraction_area_body_entered(body):
 	if body.name != 'faro':
 		enemy_enters.emit(body, self, position, attraction_force)
@@ -107,18 +112,6 @@ func faro_taking_damage(cantidad):
 	if health <= 0:
 		queue_free()
 	return health
-
-func faro_discharge(cantidad):
-	cant_energy -= cantidad
-	if cant_energy <= 0:
-		cant_energy = 0
-		$Light2.enabled = false  # Apagar luz
-		$Light/CollisionShape2D.disabled = false
-		$AttractionArea.visible = false
-		$AttractionArea/CollisionShape2D.disabled = false
-		light_timer.wait_time = 1.0  # Cambiar a modo recarga
-		light_timer.start()
-
 
 func _on_enemigo_muerto():
 	print('muerto')

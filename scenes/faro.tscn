@@ -1,12 +1,12 @@
 [gd_scene load_steps=18 format=3 uid="uid://bckp3sl38cwh"]
 
-[ext_resource type="Texture2D" uid="uid://uiyyfuije55j" path="res://assets/art/light.png" id="1_0bs3t"]
 [ext_resource type="Script" path="res://scritps/faro.gd" id="1_88e4t"]
 [ext_resource type="Texture2D" uid="uid://4o6dbrgbsl42" path="res://assets/art/faro.png" id="1_frsqq"]
+[ext_resource type="Texture2D" uid="uid://blpwqonoklaby" path="res://assets/art/lighttexture.tres" id="4_6md3k"]
 [ext_resource type="Texture2D" uid="uid://culm0udby7q4o" path="res://assets/art/atraccion.png" id="4_mjqcs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x4age"]
-radius = 73.1095
+radius = 160.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bliqp"]
 radius = 51.2445
@@ -93,12 +93,6 @@ script = ExtResource("1_88e4t")
 visible = false
 input_pickable = false
 
-[node name="Sprite2D" type="Sprite2D" parent="Light"]
-modulate = Color(1, 1, 1, 0.341176)
-position = Vector2(-0.374999, 0.374997)
-scale = Vector2(0.234583, 0.234583)
-texture = ExtResource("1_0bs3t")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Light"]
 shape = SubResource("CircleShape2D_x4age")
 
@@ -124,6 +118,12 @@ animation = &"light_on"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 4.5)
 shape = SubResource("RectangleShape2D_gtrbc")
+
+[node name="Light2" type="PointLight2D" parent="."]
+enabled = false
+color = Color(0.946187, 0.748345, 0.296734, 1)
+texture = ExtResource("4_6md3k")
+texture_scale = 5.0
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="body_entered" from="Light" to="." method="_on_light_body_entered"]

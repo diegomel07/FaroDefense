@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmt5itqaumhrn"]
+
+[ext_resource type="Texture2D" uid="uid://gl5k2dj61gtm" path="res://assets/art/barrera.png" id="1_7aklb"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iougk"]
+radius = 100.0
+height = 400.0
+
+[node name="barrera" type="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_iougk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 10)
+scale = Vector2(0.213021, 0.213021)
+texture = ExtResource("1_7aklb")
