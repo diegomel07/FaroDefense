@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://de4cwf4weyk2w"]
 
-[ext_resource type="Script" path="res://scritps/enemigo.gd" id="1_5rv1d"]
+[ext_resource type="Script" uid="uid://bqegr45hphhtd" path="res://scritps/enemigo.gd" id="1_5rv1d"]
 [ext_resource type="Texture2D" uid="uid://s8lycgsksiyc" path="res://assets/art/abisal.png" id="2_kpeh2"]
 [ext_resource type="Texture2D" uid="uid://blpwqonoklaby" path="res://assets/art/lighttexture.tres" id="3_85pqw"]
 

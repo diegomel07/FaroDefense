@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhp2vu4xnu7i7"]
 
-[ext_resource type="Script" path="res://scritps/trampa.gd" id="1_ij5qx"]
+[ext_resource type="Script" uid="uid://d0tdc7dkbn7gi" path="res://scritps/trampa.gd" id="1_ij5qx"]
 [ext_resource type="Texture2D" uid="uid://bjgkxr7e50lx0" path="res://assets/art/trap.png" id="4_e6ovb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x4age"]

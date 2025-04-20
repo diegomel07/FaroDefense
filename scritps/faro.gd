@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends CharacterBody2D
 
 var health = 100
 var damage = 40
@@ -10,6 +10,8 @@ var light_cost = 10
 var enemies_inside = {}
 var damage_interval = 1.0  # cada 1 segundo
 
+@export var velocidad = 100
+var can_move = false
 
 @onready var light_timer := $LightTimer  # Timer en la escena
 @onready var attraction_sprite := $AttractionArea/Sprite2D
@@ -32,7 +34,23 @@ func _process(delta):
 		if damage_time >= damage_interval:
 			aplly_damage()
 			damage_time = 0.0
-
+	if Input.is_action_just_pressed("movement"):
+		can_move = true
+func _physics_process(delta):
+	if can_move:
+		var input_vector = Vector2.ZERO
+		if Input.is_action_pressed("ui_right"):
+			input_vector.x += 1
+		if Input.is_action_pressed("ui_left"):
+			input_vector.x -= 1
+		if Input.is_action_pressed("ui_down"):
+			input_vector.y += 1
+		if Input.is_action_pressed("ui_up"):
+			input_vector.y -= 1
+		input_vector = input_vector.normalized()
+		velocity = input_vector * velocidad
+		move_and_slide()
+		
 func aplly_damage():
 	for enemy in enemies_inside.keys():
 		if is_instance_valid(enemy):
@@ -124,3 +142,6 @@ func faro_discharge(cantidad):
 
 func _on_enemigo_muerto():
 	print('muerto')
+
+func activate_movement():
+	can_move = true

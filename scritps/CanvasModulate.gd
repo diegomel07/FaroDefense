@@ -3,7 +3,7 @@ extends CanvasModulate
 
 # 6 a 6 y que esas 6 horas duren 6 minutos 
 # ciclo de 24 horas de 12 minutos 720 segundos INGAME_SPEED = 2
-enum EstadoJuego { PAUSADO, JUGANDO, AVANCE_RAPIDO }
+enum EstadoJuego { PAUSADO, JUGANDO, AVANCE_RAPIDO, TUTORIAL }
 var estado = EstadoJuego.PAUSADO
 
 const MINUTES_PER_DAY = 1440
@@ -39,10 +39,17 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 		
 	print(estado)
-	
+	if estado == EstadoJuego.TUTORIAL:
+		$"../CanvasLayer/play".visible = true
+		$"../CanvasLayer/shop".visible = true
+
+		$"../CanvasLayer/Button".visible = true
+		$"../CanvasLayer/Button2".visible = true
 	if estado != EstadoJuego.PAUSADO:
 		$"../CanvasLayer/Button".visible = false
 		$"../CanvasLayer/Button2".visible = false
+		$"../CanvasLayer/play".visible = false
+		$"../CanvasLayer/shop".visible = false
 		time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
 		var value = (sin(time - PI / 2.0) + 1.0) / 2.0
 		self.color = gradient_texture.gradient.sample(value)
@@ -50,6 +57,8 @@ func _process(delta: float) -> void:
 	else:
 		$"../CanvasLayer/Button".visible = true
 		$"../CanvasLayer/Button2".visible = true
+		$"../CanvasLayer/play".visible = true
+		$"../CanvasLayer/shop".visible = true
 
 
 func _recalculate_time() -> void:

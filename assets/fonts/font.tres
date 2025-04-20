@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://qsqj4g7d3p1n"]
+
+[ext_resource type="FontFile" uid="uid://boycdxgeu1i7x" path="res://assets/fonts/LumenBolds.ttf" id="1_cunc5"]
+
+[resource]
+default_font = ExtResource("1_cunc5")

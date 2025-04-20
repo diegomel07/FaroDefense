@@ -87,6 +87,3 @@ func _unhandled_input(event):
 		else:
 			floating_item.visible = false
 			floating_item.texture = null
-
-
-

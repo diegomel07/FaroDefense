@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://y5r34kf56gxv"]
+[gd_scene load_steps=15 format=3 uid="uid://y5r34kf56gxv"]
 
+[ext_resource type="Script" uid="uid://b5wycsip4ytc5" path="res://pulpo.gd" id="1_qpjm1"]
 [ext_resource type="Texture2D" uid="uid://0o8wq8rywtg1" path="res://assets/art/pulpo.png" id="2_bkive"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1w4mj"]
@@ -84,6 +85,7 @@ animations = [{
 }]
 
 [node name="pulpo" type="CharacterBody2D"]
+script = ExtResource("1_qpjm1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, -2.5)
@@ -101,4 +103,4 @@ scale = Vector2(6.39286, 6.39286)
 sprite_frames = SubResource("SpriteFrames_nptj4")
 animation = &"movement"
 autoplay = "movement"
-frame_progress = 0.166658
+frame_progress = 0.898298

@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://dd36d2i24s4d0"]
 
-[ext_resource type="Script" path="res://inventory/inventory_item.gd" id="1_mfx7u"]
-[ext_resource type="Texture2D" uid="uid://cpeck8d5oxe3d" path="res://assets/tiles/items/wood.png" id="2_m6jvo"]
+[ext_resource type="Script" uid="uid://bi2tspplfpw3m" path="res://inventory/inventory_item.gd" id="1_mfx7u"]
+
+[sub_resource type="Resource" id="Resource_pq4un"]
+metadata/__load_path__ = "res://assets/tiles/items/wood.png"
 
 [resource]
 script = ExtResource("1_mfx7u")
 name = "wood"
-texture = ExtResource("2_m6jvo")
+texture = SubResource("Resource_pq4un")

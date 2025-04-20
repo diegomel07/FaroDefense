@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://bckp3sl38cwh"]
 
-[ext_resource type="Script" path="res://scritps/faro.gd" id="1_88e4t"]
+[ext_resource type="Script" uid="uid://cptlli27jaru1" path="res://scritps/faro.gd" id="1_88e4t"]
 [ext_resource type="Texture2D" uid="uid://4o6dbrgbsl42" path="res://assets/art/faro.png" id="1_frsqq"]
 [ext_resource type="Texture2D" uid="uid://blpwqonoklaby" path="res://assets/art/lighttexture.tres" id="4_6md3k"]
 [ext_resource type="Texture2D" uid="uid://culm0udby7q4o" path="res://assets/art/atraccion.png" id="4_mjqcs"]
@@ -107,7 +107,7 @@ expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hhaxc"]
 
-[node name="faro" type="StaticBody2D"]
+[node name="faro" type="CharacterBody2D"]
 input_pickable = true
 script = ExtResource("1_88e4t")
 

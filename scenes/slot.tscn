@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvdgqxmph0n7p"]
+[gd_scene load_steps=3 format=3 uid="uid://dvdgqxmph0n7p"]
 
-[ext_resource type="Script" path="res://scritps/slot.gd" id="1_0ow7b"]
-[ext_resource type="Texture2D" uid="uid://c57scw4w0chis" path="res://assets/art/invertorySlot.png" id="1_kg7td"]
+[ext_resource type="Script" uid="uid://b5cdmyfpjcjfh" path="res://scritps/slot.gd" id="1_0ow7b"]
 [ext_resource type="FontFile" uid="uid://b0yr12purk3qv" path="res://assets/fonts/NotJamChunkySans.ttf" id="3_c6i3k"]
 
 [node name="slot" type="Button"]
@@ -13,7 +12,6 @@ script = ExtResource("1_0ow7b")
 
 [node name="background" type="Sprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
-texture = ExtResource("1_kg7td")
 centered = false
 
 [node name="CenterContainer" type="CenterContainer" parent="."]

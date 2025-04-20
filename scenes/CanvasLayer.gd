@@ -10,4 +10,3 @@ func _on_button_2_pressed():
 		inventory.close()
 	else:
 		inventory.open()
-
