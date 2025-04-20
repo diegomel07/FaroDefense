@@ -1,17 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmt5itqaumhrn"]
+[gd_scene load_steps=5 format=3 uid="uid://bhp2vu4xnu7i7"]
 
-[ext_resource type="Texture2D" uid="uid://gl5k2dj61gtm" path="res://assets/art/barrera.png" id="1_7aklb"]
+[ext_resource type="Script" path="res://scritps/trampa.gd" id="1_ij5qx"]
+[ext_resource type="Texture2D" uid="uid://bjgkxr7e50lx0" path="res://assets/art/trap.png" id="4_e6ovb"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iougk"]
-radius = 100.0
-height = 400.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_x4age"]
+radius = 96.0
 
-[node name="barrera" type="RigidBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtrbc"]
+size = Vector2(29, 48)
+
+[node name="trampa" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_ij5qx")
+
+[node name="Deteccion" type="Area2D" parent="."]
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deteccion"]
+shape = SubResource("CircleShape2D_x4age")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_iougk")
+position = Vector2(1.5, 0)
+shape = SubResource("RectangleShape2D_gtrbc")
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1, 10)
-scale = Vector2(0.213021, 0.213021)
-texture = ExtResource("1_7aklb")
+texture = ExtResource("4_e6ovb")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="body_entered" from="Deteccion" to="." method="_on_light_body_entered"]
+[connection signal="body_exited" from="Deteccion" to="." method="_on_light_body_exited"]

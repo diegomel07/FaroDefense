@@ -51,10 +51,9 @@ position = Vector2(-1.5, -2.5)
 shape = SubResource("RectangleShape2D_1w4mj")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(32, 0)
+target_position = Vector2(0, 32)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-debug_enabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nptj4")
@@ -66,3 +65,7 @@ position = Vector2(2, -20)
 color = Color(0.945098, 0.74902, 0.298039, 1)
 texture = ExtResource("3_85pqw")
 texture_scale = 0.5
+
+[node name="ParalyzeTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="ParalyzeTimer" to="." method="_on_paralyze_timer_timeout"]

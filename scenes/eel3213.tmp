@@ -200,10 +200,11 @@ animations = [{
 }],
 "loop": true,
 "name": &"movement",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [node name="eel" type="CharacterBody2D"]
+rotation = -1.5708
 script = ExtResource("1_x7s4u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -213,13 +214,11 @@ shape = SubResource("RectangleShape2D_1w4mj")
 [node name="RayCast2D" type="RayCast2D" parent="."]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nptj4")
 animation = &"movement"
 autoplay = "movement"
-frame_progress = 0.477012
-
-[node name="ParalyzeTimer" type="Timer" parent="."]
-
-[connection signal="timeout" from="ParalyzeTimer" to="." method="_on_paralyze_timer_timeout"]
+frame = 12
+frame_progress = 0.333561

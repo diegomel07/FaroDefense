@@ -1,9 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://bckp3sl38cwh"]
+[gd_scene load_steps=27 format=3 uid="uid://bckp3sl38cwh"]
 
 [ext_resource type="Script" path="res://scritps/faro.gd" id="1_88e4t"]
 [ext_resource type="Texture2D" uid="uid://4o6dbrgbsl42" path="res://assets/art/faro.png" id="1_frsqq"]
 [ext_resource type="Texture2D" uid="uid://blpwqonoklaby" path="res://assets/art/lighttexture.tres" id="4_6md3k"]
 [ext_resource type="Texture2D" uid="uid://culm0udby7q4o" path="res://assets/art/atraccion.png" id="4_mjqcs"]
+[ext_resource type="Texture2D" uid="uid://cdjfjxb477kqm" path="res://assets/art/ui/energy_bar.png" id="5_twsxp"]
+[ext_resource type="Texture2D" uid="uid://dfaydu2v8adre" path="res://assets/art/ui/full_bar.png" id="6_b4hcv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x4age"]
 radius = 160.0
@@ -85,6 +87,26 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gtrbc"]
 size = Vector2(22, 67)
 
+[sub_resource type="ImageTexture" id="ImageTexture_c6uym"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_3q8id"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_gjhsx"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_3w3yx"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6qxk4"]
+texture = ExtResource("5_twsxp")
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3s1ft"]
+texture = ExtResource("6_b4hcv")
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hhaxc"]
+
 [node name="faro" type="StaticBody2D"]
 input_pickable = true
 script = ExtResource("1_88e4t")
@@ -124,6 +146,21 @@ enabled = false
 color = Color(0.946187, 0.748345, 0.296734, 1)
 texture = ExtResource("4_6md3k")
 texture_scale = 5.0
+
+[node name="HSlider" type="HSlider" parent="."]
+offset_left = -26.0
+offset_top = 40.0
+offset_right = 26.0
+offset_bottom = 48.0
+theme_override_icons/grabber = SubResource("ImageTexture_c6uym")
+theme_override_icons/grabber_highlight = SubResource("ImageTexture_3q8id")
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_gjhsx")
+theme_override_icons/tick = SubResource("ImageTexture_3w3yx")
+theme_override_styles/slider = SubResource("StyleBoxTexture_6qxk4")
+theme_override_styles/grabber_area = SubResource("StyleBoxTexture_3s1ft")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_hhaxc")
+editable = false
+scrollable = false
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="body_entered" from="Light" to="." method="_on_light_body_entered"]

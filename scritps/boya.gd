@@ -16,17 +16,21 @@ var damage_interval = 1.0  # cada 1 segundo
 @onready var attraction_sprite := $AttractionArea/Sprite2D
 @onready var attraction_collision := $AttractionArea/CollisionShape2D
 @onready var circle = attraction_collision.shape
+@onready var slider = $HSlider
 
 signal enemy_enters(enemy, body, faro_position, attraction_force)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	slider.value = cant_energy
 	adjust_attraction_area_size(attraction_radius)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var damage_time = 0.0
 func _process(delta):
-	if $Light.visible:
+	print(cant_energy)
+	slider.value = cant_energy
+	if $Light2.enabled:
 		damage_time += delta
 		if damage_time >= damage_interval:
 			aplly_damage()
@@ -49,18 +53,16 @@ func adjust_attraction_area_size(size):
 func _on_input_event(viewport, event, shape_idx):
 	if event.is_pressed():
 		$Light2.enabled = !$Light2.enabled  # Alternar luz
-		$Light/CollisionShape2D.disabled = !$Light.visible
-		if $Light.visible:
-			pass
-			#$AnimatedSprite2D.play('light_on')
+		$Light/CollisionShape2D.disabled = !$Light2.enabled
+		if $Light2.enabled:
+			$AnimatedSprite2D.play('light_on')
 		else:
-			pass
-			#$AnimatedSprite2D.stop()
+			$AnimatedSprite2D.play('light_off')
 		
 		$AttractionArea.visible = !$AttractionArea.visible  # Alternar luz
 		$AttractionArea/CollisionShape2D.disabled = !$AttractionArea.visible  # Alternar luz
 		
-		if $Light.visible:
+		if $Light2.enabled:
 			light_timer.wait_time = 2.0
 			light_timer.start()
 		else:
@@ -78,7 +80,7 @@ func _on_light_body_exited(body):
 
 # se recarga o carga la energia
 func _on_light_timer_timeout():
-	if $Light.visible:
+	if $Light2.enabled:
 		cant_energy -= light_cost
 		#print("Energía:", cant_energy)
 		if cant_energy <= 0:
@@ -99,7 +101,6 @@ func _on_light_timer_timeout():
 			#print("Energía recargada por completo.")
 
 
-
 func _on_attraction_area_body_entered(body):
 	if body.name != 'faro':
 		enemy_enters.emit(body, self, position, attraction_force)
@@ -115,3 +116,17 @@ func faro_taking_damage(cantidad):
 
 func _on_enemigo_muerto():
 	print('muerto')
+	
+
+func faro_discharge(cantidad):
+	cant_energy -= cantidad
+	if cant_energy <= 0:
+		cant_energy = 0
+		$Light2.enabled = false  # Apagar luz
+		$Light/CollisionShape2D.disabled = false
+		$AttractionArea.visible = false
+		$AttractionArea/CollisionShape2D.disabled = false
+		$AnimatedSprite2D.play('light_off')
+		light_timer.wait_time = 1.0  # Cambiar a modo recarga
+		light_timer.start()
+	

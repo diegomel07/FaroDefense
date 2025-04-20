@@ -4,18 +4,19 @@ var map_width = 1280
 var map_height = 720
 var enemy_preload = preload("res://scenes/enemigo.tscn")
 var eel = preload("res://scenes/eel.tscn")
+var shark = preload("res://scenes/tiburon.tscn")
 var map_rect = Rect2(Vector2.ZERO, Vector2(map_width, map_height))
 
 
 @onready var faros = $NavigationRegion2D/Faros.get_children()
 @onready var enemies_abisal = $EnemiesAbisal
+@onready var audio_player = $AudioStreamPlayer2D
 
 # Stats Jugador
-var puntos = 2000
+var puntos = 9999999
 
 func _ready():
 	pass
-
 
 func _process(delta):
 	$CanvasLayer/Control2/puntos.text = 'Puntos: ' + str(puntos) 
@@ -49,22 +50,33 @@ func get_spawn_position_outside_map() -> Vector2:
 			return Vector2.ZERO
 
 
-func generate_enemies(cant_enemies):
+func generate_enemies(cant_enemies: int, prob1: float, prob2: float, prob3: float):
+	var total_prob = prob1 + prob2 + prob3
+	if total_prob == 0:
+		push_warning("Las probabilidades no pueden ser 0.")
+		return
+
+	# Normalizamos las probabilidades en caso de que no sumen exactamente 1
+	prob1 /= total_prob
+	prob2 /= total_prob
+	prob3 /= total_prob
+
 	for i in range(cant_enemies):
-		var enemy_scene: PackedScene
 		var roll = randf()
 
-		if roll < 0.0:
-			enemy_scene = enemy_preload  # 70% de probabilidad
+		var selected_scene: PackedScene
+		if roll < prob1:
+			selected_scene = enemy_preload
+		elif roll < prob1 + prob2:
+			selected_scene = eel
 		else:
-			enemy_scene = eel  # 30% de probabilidad
+			selected_scene = shark
 
-		var enemy = enemy_scene.instantiate()
+		var enemy = selected_scene.instantiate()
 		enemy.position = get_spawn_position_outside_map()
 
 		connect_enemies_with_attraction(enemy)
 		enemy.connect('muerto', Callable(self, "_on_enemigo_muerto"))
-
 		enemies_abisal.add_child(enemy)
 
 
@@ -78,32 +90,60 @@ func connect_enemies_with_attraction(enemy):
 func _on_canvas_modulate_dia_nuevo():
 	pass
 
+func load_mp3(path):
+	var file = FileAccess.open(path, FileAccess.READ)
+	var sound = AudioStream.new()
+	sound.data = file.get_buffer(file.get_length())
+	return sound
+
 
 func _on_canvas_modulate_time_tick(day, hour, minute):
+	
 	if hour == 6:
-		eliminar_enemigos()
+		if !audio_player.stream == preload("res://assets/music/chill.mp3"):
+			audio_player.stream = preload("res://assets/music/chill.mp3")
+			audio_player.play()
+			audio_player.stream.loop = true
+			$GPUParticles2D.visible = false
+			eliminar_enemigos()
 	
 	# apenas sean las 12 am - 0
 	
-	#Distinguir entre dias para hacer nuevas ronda
-	if hour >= 0 and hour <= 5:
-		#tutorial
-		if day == 1:
-			if minute % 20 == 0:
-				generate_enemies(3)
-		
-		if day == 2:
-			if minute % 20 == 0:
-				generate_enemies(3)
-				
-		if day == 3:
-			if minute % 20 == 0:
-				generate_enemies(3)
-				
-		if day == 4:
-			if minute % 20 == 0:
-				generate_enemies(3)
-			
+	# Se ejecuta solo de 0h a 6h
+	# Solo durante la noche
+	if hour >= 0 and hour < 6:
+		if audio_player.stream == preload("res://assets/music/chill.mp3"):
+			audio_player.stream = preload("res://assets/music/IN Stage 4 (powerful) Boss - Marisa Kirisame's Theme - Love-colored Master Spark [_6L6E7TLy10].mp3")
+			audio_player.play()
+			audio_player.stream.loop = true
+		$GPUParticles2D.visible = true
+		var minutes_passed = hour * 60 + minute
+		# Oleadas cada 30 minutos (solo 2 por noche)
+		if minutes_passed % 30 == 0:
+			var wave = int(minutes_passed / 30)  # 0, 1, 2
+
+			# Cantidad base por oleada: empieza bajo y crece muy lento
+			var base_count = clamp(1 + int(day / 3) + int(wave), 1, 6)
+
+			match day:
+				1:
+					generate_enemies(base_count, 1.0, 0.0, 0.0)
+				2:
+					var p2 = clamp(wave * 0.2, 0.0, 0.3)
+					var p1 = 1.0 - p2
+					generate_enemies(base_count, p1, p2, 0.0)
+				3:
+					var p3 = clamp(wave * 0.1, 0.0, 0.3)
+					var p2 = clamp(wave * 0.2, 0.0, 0.4)
+					var p1 = max(0.0, 1.0 - p2 - p3)
+					generate_enemies(base_count, p1, p2, p3)
+				_:
+					var p3 = clamp((wave + day) * 0.02, 0.1, 0.5)
+					var p2 = clamp((wave + day) * 0.03, 0.2, 0.5)
+					var p1 = max(0.0, 1.0 - p2 - p3)
+					generate_enemies(base_count, p1, p2, p3)
+
+
 
 func eliminar_enemigos():
 	for child in $EnemiesAbisal.get_children():

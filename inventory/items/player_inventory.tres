@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="Inventory" load_steps=8 format=3 uid="uid://tyu4g3uuuntl"]
+[gd_resource type="Resource" script_class="Inventory" load_steps=9 format=3 uid="uid://tyu4g3uuuntl"]
 
 [ext_resource type="Script" path="res://inventory/inventory_resource.gd" id="1_18omc"]
 [ext_resource type="Script" path="res://inventory/inventory_slot.gd" id="2_hu2t5"]
 [ext_resource type="Resource" uid="uid://bfn3t6bbv7gvf" path="res://inventory/items/boya.tres" id="2_oy3c0"]
 [ext_resource type="Resource" uid="uid://cqsft2icndu3w" path="res://inventory/items/barrera.tres" id="4_o1tjx"]
+[ext_resource type="Resource" uid="uid://colyqpnewv2ei" path="res://inventory/items/trampa.tres" id="5_04jyu"]
 
 [sub_resource type="Resource" id="Resource_cj36h"]
 script = ExtResource("2_hu2t5")
@@ -17,6 +18,7 @@ amount = 0
 
 [sub_resource type="Resource" id="Resource_5aby3"]
 script = ExtResource("2_hu2t5")
+item = ExtResource("5_04jyu")
 amount = 0
 
 [resource]

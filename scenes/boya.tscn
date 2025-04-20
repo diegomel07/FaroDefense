@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://bxkmp1emhaf6a"]
+[gd_scene load_steps=36 format=3 uid="uid://bxkmp1emhaf6a"]
 
 [ext_resource type="Script" path="res://scritps/boya.gd" id="1_khtk8"]
 [ext_resource type="Texture2D" uid="uid://culm0udby7q4o" path="res://assets/art/atraccion.png" id="3_tlub8"]
 [ext_resource type="Texture2D" uid="uid://blpwqonoklaby" path="res://assets/art/lighttexture.tres" id="4_dyv53"]
 [ext_resource type="Texture2D" uid="uid://bp8gvdq675hsl" path="res://assets/art/boya.png" id="4_hcgrl"]
+[ext_resource type="Texture2D" uid="uid://cdjfjxb477kqm" path="res://assets/art/ui/energy_bar.png" id="5_c1auu"]
+[ext_resource type="Texture2D" uid="uid://dfaydu2v8adre" path="res://assets/art/ui/full_bar.png" id="6_r6ucg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x4age"]
 radius = 96.0
@@ -11,8 +13,56 @@ radius = 96.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_bliqp"]
 radius = 51.2445
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtrbc"]
-size = Vector2(29, 48)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6qtm"]
+size = Vector2(30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i367p"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(270, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5d6wa"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(315, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2o0c"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(360, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yodfc"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(405, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1sor"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(450, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mupe"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(495, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wankf"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(540, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uja1g"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(585, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj85b"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(630, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20net"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(675, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uytwe"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(720, 0, 45, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5it6"]
+atlas = ExtResource("4_hcgrl")
+region = Rect2(765, 0, 45, 46)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_no3kv"]
 atlas = ExtResource("4_hcgrl")
@@ -42,6 +92,47 @@ region = Rect2(225, 0, 45, 46)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_i367p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5d6wa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2o0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yodfc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1sor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6mupe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wankf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uja1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj85b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20net")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uytwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5it6")
+}],
+"loop": true,
+"name": &"light_off",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_no3kv")
 }, {
 "duration": 1.0,
@@ -60,9 +151,29 @@ animations = [{
 "texture": SubResource("AtlasTexture_wugmn")
 }],
 "loop": true,
-"name": &"default",
+"name": &"light_on",
 "speed": 10.0
 }]
+
+[sub_resource type="ImageTexture" id="ImageTexture_2ilkv"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_kn5vo"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_dy8mc"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_uax1u"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ucpt3"]
+texture = ExtResource("5_c1auu")
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_15jv6"]
+texture = ExtResource("6_r6ucg")
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j8hl7"]
 
 [node name="boya" type="StaticBody2D"]
 input_pickable = true
@@ -91,20 +202,34 @@ position = Vector2(7.62939e-06, -2)
 texture = ExtResource("3_tlub8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.5, 0)
-shape = SubResource("RectangleShape2D_gtrbc")
+position = Vector2(-3, 0)
+shape = SubResource("RectangleShape2D_m6qtm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_f2wuq")
-autoplay = "default"
-frame = 4
-frame_progress = 0.730253
+animation = &"light_on"
+autoplay = "light_off"
 
 [node name="Light2" type="PointLight2D" parent="."]
 enabled = false
 color = Color(0.945098, 0.74902, 0.298039, 1)
 texture = ExtResource("4_dyv53")
 texture_scale = 3.0
+
+[node name="HSlider" type="HSlider" parent="."]
+offset_left = -26.0
+offset_top = 24.0
+offset_right = 26.0
+offset_bottom = 32.0
+theme_override_icons/grabber = SubResource("ImageTexture_2ilkv")
+theme_override_icons/grabber_highlight = SubResource("ImageTexture_kn5vo")
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_dy8mc")
+theme_override_icons/tick = SubResource("ImageTexture_uax1u")
+theme_override_styles/slider = SubResource("StyleBoxTexture_ucpt3")
+theme_override_styles/grabber_area = SubResource("StyleBoxTexture_15jv6")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_j8hl7")
+editable = false
+scrollable = false
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="body_entered" from="Light" to="." method="_on_light_body_entered"]

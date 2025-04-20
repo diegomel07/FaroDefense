@@ -2,12 +2,15 @@ extends CharacterBody2D
 
 var health = 100
 var damage = 20
-var speed = 100
+var original_speed = 100
+var speed = original_speed
 var target = Vector2(640,360)
 var current_attraction_force = 0
 var damage_interval = 2.0
+var is_paralyzed = false
 
 
+@onready var paralyze_timer = $ParalyzeTimer
 @onready var detector = $RayCast2D
 @onready var agent = $NavigationAgent2D
 
@@ -36,6 +39,7 @@ func _physics_process(delta):
 		move_and_slide()
 		
 	look_at(target)
+	rotate(-PI/2)
 	
 	if detector.collide_with_bodies:
 		var faro = detector.get_collider()
@@ -64,3 +68,15 @@ func _on_enters_zone(enemy, body, faro_position, attraction_force):
 			current_attraction_force = attraction_force
 			target = faro_position
 
+func paralyze(seconds: float):
+	if is_paralyzed:
+		return  # ya está paralizado
+	is_paralyzed = true
+	speed = 0  # Detener movimiento
+	paralyze_timer.wait_time = seconds
+	paralyze_timer.start()
+
+
+func _on_paralyze_timer_timeout():
+	is_paralyzed = false
+	speed = original_speed  # Restaurar velocidad

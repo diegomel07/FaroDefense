@@ -58,6 +58,14 @@ func _on_slot_2_pressed():
 		floating_item.visible = true
 		precio = int($NinePatchRect/Inventory/slot2/CenterContainer/Panel/Label.text)
 
+func _on_slot_3_pressed():
+	colocable_escena = preload("res://scenes/trampa.tscn")
+	var item_node = $NinePatchRect/Inventory/slot3/CenterContainer/Panel/item
+	if item_node and item_node.texture:
+		floating_item.texture = item_node.texture
+		floating_item.visible = true
+		precio = int($NinePatchRect/Inventory/slot3/CenterContainer/Panel/Label.text)
+
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		# Soltar ítem (cancelar arrastre)
@@ -79,3 +87,6 @@ func _unhandled_input(event):
 		else:
 			floating_item.visible = false
 			floating_item.texture = null
+
+
+

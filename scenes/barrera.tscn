@@ -1,16 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2ccli883fd78"]
 
-[ext_resource type="Texture2D" uid="uid://gl5k2dj61gtm" path="res://assets/art/barrera.png" id="1_ohbmm"]
+[ext_resource type="Texture2D" uid="uid://bw45yj27o02qp" path="res://assets/art/wall.png" id="1_b0ivw"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iougk"]
-radius = 12.0
-height = 58.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ri7ap"]
+size = Vector2(40, 53)
 
 [node name="barrera" type="StaticBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_iougk")
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_ri7ap")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.0332031, 0.0332031)
-texture = ExtResource("1_ohbmm")
+texture = ExtResource("1_b0ivw")

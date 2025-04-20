@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://dylmm52wky8u"]
+
+[ext_resource type="Script" path="res://scritps/enemigo.gd" id="1_7xw4e"]
+[ext_resource type="Texture2D" uid="uid://blpwqonoklaby" path="res://assets/art/lighttexture.tres" id="3_d2aqy"]
+[ext_resource type="Texture2D" uid="uid://7l8sajjeii4c" path="res://assets/art/shark.png" id="3_ukrkw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1w4mj"]
+size = Vector2(26, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3632s"]
+atlas = ExtResource("3_ukrkw")
+region = Rect2(0, 0, 52, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntlmy"]
+atlas = ExtResource("3_ukrkw")
+region = Rect2(52, 0, 52, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7khnh"]
+atlas = ExtResource("3_ukrkw")
+region = Rect2(104, 0, 52, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m25lc"]
+atlas = ExtResource("3_ukrkw")
+region = Rect2(156, 0, 52, 53)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nptj4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3632s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntlmy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7khnh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m25lc")
+}],
+"loop": true,
+"name": &"movement",
+"speed": 5.0
+}]
+
+[node name="enemigo" type="CharacterBody2D"]
+script = ExtResource("1_7xw4e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 6)
+shape = SubResource("RectangleShape2D_1w4mj")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 40)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nptj4")
+animation = &"movement"
+autoplay = "movement"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(2, -20)
+color = Color(0.945098, 0.74902, 0.298039, 1)
+texture = ExtResource("3_d2aqy")
+texture_scale = 0.5
+
+[node name="ParalyzeTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="ParalyzeTimer" to="." method="_on_paralyze_timer_timeout"]

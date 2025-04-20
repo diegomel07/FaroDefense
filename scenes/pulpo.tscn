@@ -1,0 +1,104 @@
+[gd_scene load_steps=14 format=3 uid="uid://y5r34kf56gxv"]
+
+[ext_resource type="Texture2D" uid="uid://0o8wq8rywtg1" path="res://assets/art/pulpo.png" id="2_bkive"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1w4mj"]
+size = Vector2(29, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ut2qn"]
+atlas = ExtResource("2_bkive")
+region = Rect2(0, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywalr"]
+atlas = ExtResource("2_bkive")
+region = Rect2(77, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5cx4"]
+atlas = ExtResource("2_bkive")
+region = Rect2(154, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26qh7"]
+atlas = ExtResource("2_bkive")
+region = Rect2(231, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbg4h"]
+atlas = ExtResource("2_bkive")
+region = Rect2(308, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n4xr"]
+atlas = ExtResource("2_bkive")
+region = Rect2(385, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7a8i"]
+atlas = ExtResource("2_bkive")
+region = Rect2(462, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ytejx"]
+atlas = ExtResource("2_bkive")
+region = Rect2(539, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4gcq"]
+atlas = ExtResource("2_bkive")
+region = Rect2(616, 0, 77, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0n8a"]
+atlas = ExtResource("2_bkive")
+region = Rect2(693, 0, 77, 63)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nptj4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ut2qn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywalr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5cx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26qh7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jbg4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n4xr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7a8i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ytejx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4gcq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0n8a")
+}],
+"loop": true,
+"name": &"movement",
+"speed": 10.0
+}]
+
+[node name="pulpo" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, -2.5)
+shape = SubResource("RectangleShape2D_1w4mj")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(32, 0)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -8)
+scale = Vector2(6.39286, 6.39286)
+sprite_frames = SubResource("SpriteFrames_nptj4")
+animation = &"movement"
+autoplay = "movement"
+frame_progress = 0.166658

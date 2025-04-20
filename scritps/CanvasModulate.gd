@@ -17,7 +17,7 @@ signal lose()
 
 
 @export var gradient_texture:GradientTexture1D
-@export var INGAME_SPEED = 30
+@export var INGAME_SPEED = 2
 @export var INITIAL_HOUR = 6:
 	
 
@@ -73,7 +73,7 @@ func _recalculate_time() -> void:
 	# Si está en avance rápido y vuelve a las 0 AM
 	if estado == EstadoJuego.AVANCE_RAPIDO and hour == 0:
 		estado = EstadoJuego.JUGANDO
-		INGAME_SPEED = 30
+		INGAME_SPEED = 2
 
 	# Perder al día 3
 	if day == 3:

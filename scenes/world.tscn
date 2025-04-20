@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://bi1yay2wialgs"]
+[gd_scene load_steps=33 format=3 uid="uid://bi1yay2wialgs"]
 
 [ext_resource type="Script" path="res://scritps/world.gd" id="1_rv3lu"]
 [ext_resource type="PackedScene" uid="uid://bckp3sl38cwh" path="res://scenes/faro.tscn" id="1_u107u"]
+[ext_resource type="AudioStream" uid="uid://cahqdaospi3x7" path="res://assets/music/chill.mp3" id="2_sx1mp"]
 [ext_resource type="Script" path="res://scritps/CanvasModulate.gd" id="3_m6t7i"]
 [ext_resource type="Texture2D" uid="uid://dr0ksf2i5q3pv" path="res://assets/art/water.png" id="4_7nhjk"]
 [ext_resource type="Texture2D" uid="uid://cxebiqog1vgmk" path="res://assets/art/daynightcycle-gradient-texture.tres" id="4_isjnb"]
@@ -312,10 +313,55 @@ sources/5 = SubResource("TileSetAtlasSource_7hl3j")
 sources/6 = SubResource("TileSetAtlasSource_qi4de")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_bg5tr"]
-vertices = PackedVector2Array(659, 408, 1270, 710, 10, 710, 617, 408, 10, 10, 617, 321, 1270, 10, 659, 321)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(5, 4, 6, 7), PackedInt32Array(7, 6, 1, 0)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)])
 source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bonxs"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_xoah8"]
+max_value = 0.3
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.10566, 0.0961779), 0.0, 0.0, 0, 0, Vector2(0.50566, 0.3), 0.0, 0.0, 0, 0, Vector2(0.901887, 0.102262), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_jte1x"]
+curve = SubResource("Curve_xoah8")
+
+[sub_resource type="Gradient" id="Gradient_54jsa"]
+colors = PackedColorArray(1, 1, 1, 0.0784314, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i2sfa"]
+gradient = SubResource("Gradient_54jsa")
+
+[sub_resource type="Curve" id="Curve_w5m4f"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_q088g"]
+max_value = 30.0
+_data = [Vector2(0.00754717, 15.0936), 0.0, 0.0, 0, 0, Vector2(0.0716981, 23.6115), 0.0, 0.0, 0, 0, Vector2(0.25283, 30), 0.0, 0.0, 0, 0, Vector2(1, 30), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_f7cek"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_3wp12"]
+curve_x = SubResource("Curve_w5m4f")
+curve_y = SubResource("Curve_q088g")
+curve_z = SubResource("Curve_f7cek")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q0cy3"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(640, 360, 1)
+gravity = Vector3(0, 3000, 0)
+scale_min = 0.2
+scale_over_velocity_curve = SubResource("CurveXYZTexture_3wp12")
+color_initial_ramp = SubResource("GradientTexture1D_i2sfa")
+alpha_curve = SubResource("CurveTexture_jte1x")
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_rv3lu")
@@ -388,15 +434,16 @@ vertical_alignment = 1
 script = ExtResource("8_jvad2")
 
 [node name="inventory" parent="CanvasLayer" instance=ExtResource("11_gr7ae")]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -361.0
-offset_top = 218.0
-offset_right = -12.0
-offset_bottom = 497.0
+offset_left = -355.0
+offset_top = 260.0
+offset_right = -6.0
+offset_bottom = 539.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -409,7 +456,20 @@ text = "Tienda "
 
 [node name="EnemiesAbisal" type="Node2D" parent="."]
 
-[node name="Barreras" type="Node2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_bonxs")
+position = Vector2(637, 355)
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_q0cy3")
+lifetime = 0.5
+preprocess = 0.5
+visibility_rect = Rect2(-640, -360, 1240, 720)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-130, -63)
+stream = ExtResource("2_sx1mp")
+autoplay = true
 
 [connection signal="dia_nuevo" from="CanvasModulate" to="." method="_on_canvas_modulate_dia_nuevo"]
 [connection signal="time_tick" from="CanvasModulate" to="." method="_on_canvas_modulate_time_tick"]

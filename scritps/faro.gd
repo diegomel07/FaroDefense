@@ -15,16 +15,18 @@ var damage_interval = 1.0  # cada 1 segundo
 @onready var attraction_sprite := $AttractionArea/Sprite2D
 @onready var attraction_collision := $AttractionArea/CollisionShape2D
 @onready var circle = attraction_collision.shape
-
+@onready var slider = $HSlider
 signal enemy_enters(enemy, body, faro_position, attraction_force)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	slider.value = cant_energy
 	adjust_attraction_area_size(attraction_radius)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var damage_time = 0.0
 func _process(delta):
+	slider.value = cant_energy
 	if $Light2.enabled:
 		damage_time += delta
 		if damage_time >= damage_interval:
