@@ -37,8 +37,6 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-		
-	print(estado)
 	
 	if estado != EstadoJuego.PAUSADO:
 		$"../CanvasLayer/Button".visible = false

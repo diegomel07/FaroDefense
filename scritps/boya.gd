@@ -28,7 +28,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var damage_time = 0.0
 func _process(delta):
-	print(cant_energy)
+	#print(cant_energy)
 	slider.value = cant_energy
 	if $Light2.enabled:
 		damage_time += delta

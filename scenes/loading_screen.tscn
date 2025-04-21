@@ -1,0 +1,87 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4peaw71bvfry"]
+
+[ext_resource type="Script" path="res://scritps/loading_screen.gd" id="1_5dt8c"]
+[ext_resource type="Texture2D" uid="uid://60lmcjkj5q03" path="res://assets/art/gamescreen.png" id="2_6bjdr"]
+[ext_resource type="Script" path="res://scritps/volume_slider.gd" id="3_woxar"]
+
+[sub_resource type="Animation" id="Animation_6cinu"]
+resource_name = "loading"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ri11"]
+_data = {
+"loading": SubResource("Animation_6cinu")
+}
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5dt8c")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3ri11")
+}
+
+[node name="Cinematica1" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -378.0
+offset_top = -292.0
+offset_right = 902.0
+offset_bottom = 668.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.602083, 0.602083)
+texture = ExtResource("2_6bjdr")
+
+[node name="volume_slider" type="HSlider" parent="Cinematica1"]
+layout_mode = 0
+offset_left = 955.017
+offset_top = 878.616
+offset_right = 1107.02
+offset_bottom = 896.616
+scale = Vector2(2, 2)
+max_value = 1.0
+step = 0.001
+script = ExtResource("3_woxar")
+bus_name = "music"
+
+[node name="Cinematica2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -364.0
+offset_top = -268.0
+offset_right = 404.0
+offset_bottom = 308.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="Cinematica3" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -364.0
+offset_top = -268.0
+offset_right = 404.0
+offset_bottom = 308.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1

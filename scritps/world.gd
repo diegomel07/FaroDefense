@@ -13,12 +13,14 @@ var map_rect = Rect2(Vector2.ZERO, Vector2(map_width, map_height))
 @onready var audio_player = $AudioStreamPlayer2D
 
 # Stats Jugador
-var puntos = 9999999
+var puntos = 2000
 
 func _ready():
 	pass
 
 func _process(delta):
+	if $NavigationRegion2D/Faros/faro:
+		print("Perdiste")
 	$CanvasLayer/Control2/puntos.text = 'Puntos: ' + str(puntos) 
 
 
@@ -88,7 +90,12 @@ func connect_enemies_with_attraction(enemy):
 
 # CADA NUEVO DIA 6 AM
 func _on_canvas_modulate_dia_nuevo():
-	pass
+	if !audio_player.stream == preload("res://assets/music/chill.mp3"):
+			audio_player.stream = preload("res://assets/music/chill.mp3")
+			audio_player.play()
+			audio_player.stream.loop = true
+			$GPUParticles2D.visible = false
+			eliminar_enemigos()
 
 func load_mp3(path):
 	var file = FileAccess.open(path, FileAccess.READ)
@@ -99,21 +106,13 @@ func load_mp3(path):
 
 func _on_canvas_modulate_time_tick(day, hour, minute):
 	
-	if hour == 6:
-		if !audio_player.stream == preload("res://assets/music/chill.mp3"):
-			audio_player.stream = preload("res://assets/music/chill.mp3")
-			audio_player.play()
-			audio_player.stream.loop = true
-			$GPUParticles2D.visible = false
-			eliminar_enemigos()
-	
 	# apenas sean las 12 am - 0
 	
 	# Se ejecuta solo de 0h a 6h
 	# Solo durante la noche
 	if hour >= 0 and hour < 6:
 		if audio_player.stream == preload("res://assets/music/chill.mp3"):
-			audio_player.stream = preload("res://assets/music/IN Stage 4 (powerful) Boss - Marisa Kirisame's Theme - Love-colored Master Spark [_6L6E7TLy10].mp3")
+			audio_player.stream = preload("res://assets/music/night.mp3")
 			audio_player.play()
 			audio_player.stream.loop = true
 		$GPUParticles2D.visible = true
@@ -137,12 +136,13 @@ func _on_canvas_modulate_time_tick(day, hour, minute):
 					var p2 = clamp(wave * 0.2, 0.0, 0.4)
 					var p1 = max(0.0, 1.0 - p2 - p3)
 					generate_enemies(base_count, p1, p2, p3)
-				_:
+				4:
 					var p3 = clamp((wave + day) * 0.02, 0.1, 0.5)
 					var p2 = clamp((wave + day) * 0.03, 0.2, 0.5)
 					var p1 = max(0.0, 1.0 - p2 - p3)
 					generate_enemies(base_count, p1, p2, p3)
-
+				5:
+					print("Ganaste")
 
 
 func eliminar_enemigos():
@@ -151,7 +151,7 @@ func eliminar_enemigos():
 
 func _on_enemigo_muerto():
 	puntos += 100
-
+	
 
 func _on_inventory_closed():
 	get_tree().paused = false
