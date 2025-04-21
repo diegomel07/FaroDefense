@@ -15,7 +15,7 @@ var tuto = true
 @onready var dialogue_box = $CanvasLayer/DialogueBox
 # Stats Jugador
 var puntos = 9999999
-
+var death = false
 func _ready():
 	$CanvasModulate.estado = $CanvasModulate.EstadoJuego.TUTORIAL 
 	start_tutorial()
@@ -57,6 +57,11 @@ func show_next_tutorial_step():
 		3:
 			$CanvasLayer/inventory.close()
 			dialogue_box.texts = [
+				"Es tu deber administrar la luz de tus boyas. La luz no dura eternamente.",
+				"Mientras se mantenga encendida, las bestias se verán atraídas a su luz.",
+				"Cada noche ganarás más recursos para colocar más boyas y otros objetos que te serán de utilidad.",
+				"Como las murallas: muros de gran solidez que nadie es capaz de atravesar.",
+				"También tenemos viejas trampas de pesca. Todavía funcionan, pero solo logran paralizar a las bestias por un breve instante.",
 				"Ahora es momento de esperar al anochecer.",
 				"Mucha suerte, chico. La vas a necesitar."
 			]
@@ -68,19 +73,21 @@ func show_next_tutorial_step():
 
 						
 func _process(delta):
-		
+
 	if $NavigationRegion2D/Faros.get_child_count() > 1 and tuto == true:
 		tutorial_step+=1
 		show_next_tutorial_step()
 		
 	$CanvasLayer/Control2/puntos.text = 'Puntos: ' + str(puntos) 
-	if !is_instance_valid($NavigationRegion2D/Faros/faro):
-		dialogue_box.texts =  [
+	if !is_instance_valid($NavigationRegion2D/Faros/faro) and death == false:
+		death = true
+		$CanvasModulate.estado = $CanvasModulate.EstadoJuego.TUTORIAL 
+		var dialogs =  [
 		"Como solía decir mi abuela: ‘Lorem ipsum dolor sit amet, consectetur adipiscing elit..",
 		"Un faro no elige cuándo brillar.",
 		"La luz nunca duerme, ni yo tampoco."
 		]
-		dialogue_box.current_text_index = random_number(0,len(dialogue_box.texts)-1)
+		dialogue_box.texts= [dialogs[random_number(0,len(dialogs)-1)]]
 		dialogue_box.show_text()
 		dialogue_box.current_text_index = 0
 
@@ -150,7 +157,8 @@ func connect_enemies_with_attraction(enemy):
 
 # CADA NUEVO DIA 6 AM
 func _on_canvas_modulate_dia_nuevo():
-	dialogue_box.texts = [
+	print("nuevo dia")
+	var dialogs = [
 	"La noche se va, pero no te confíes... siempre vuelve.",
 	"Sobreviviste... esta vez.",
 	"La luz ganó por ahora. Pero las sombras aprenden rápido.",
@@ -158,6 +166,7 @@ func _on_canvas_modulate_dia_nuevo():
 	"Lo lograste. Pero cada noche los rugidos suenan más cerca.",
 	"El faro sigue en pie... gracias a ti."
 	]
+	dialogue_box.texts= [dialogs[random_number(0,len(dialogs)-1)]]
 	dialogue_box.current_text_index = random_number(0,len(dialogue_box.texts)-1)
 	dialogue_box.show_text()
 	dialogue_box.current_text_index = 0
@@ -250,4 +259,7 @@ func _on_dialogue_box_dialogue_finished():
 	tutorial_step += 1
 	if tutorial_step == 4:
 		$CanvasModulate.estado = $CanvasModulate.EstadoJuego.PAUSADO 
+	if death == true: 
+		print("muerte")
+		get_tree().quit()	
 	show_next_tutorial_step()

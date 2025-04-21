@@ -39,13 +39,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 		
 	print(estado)
+	
 	if estado == EstadoJuego.TUTORIAL:
-		$"../CanvasLayer/play".visible = true
-		$"../CanvasLayer/shop".visible = true
+		$"../CanvasLayer/play".visible = false
+		$"../CanvasLayer/shop".visible = false
 
-		$"../CanvasLayer/Button".visible = true
-		$"../CanvasLayer/Button2".visible = true
-	if estado != EstadoJuego.PAUSADO:
+		$"../CanvasLayer/Button".visible = false
+		$"../CanvasLayer/Button2".visible = false
+		
+	elif estado != EstadoJuego.PAUSADO:
 		$"../CanvasLayer/Button".visible = false
 		$"../CanvasLayer/Button2".visible = false
 		$"../CanvasLayer/play".visible = false
